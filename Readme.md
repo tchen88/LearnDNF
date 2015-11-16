@@ -1,4 +1,4 @@
-# Monotone Boolean function learner Version 0.1
+# Monotone Boolean function learner Version 0.1.1
 
 ## Features:
 * Possible inputs:
@@ -16,3 +16,4 @@
 ## TODO:
 * Support truth tables as input
 * Add documentation for how the options work
+* Add documentation about run.sh
