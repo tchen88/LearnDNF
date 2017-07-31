@@ -16,4 +16,4 @@
 ## TODO:
 * Support truth tables as input
 * Add documentation for how the options work
-* Add documentation about run.sh
+* Add documentation about run.sh 
