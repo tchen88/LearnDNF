@@ -10,10 +10,22 @@
 	+ Number of variables per term
 	+ Correlation between terms (optional)
 * Options for all input:
-	+ Difference method
+	+ Distance function
 	+ Initial hypothesis
+
+## Requirements:
+* bash
+* g++
+* Python interpreter
+* 125 MB disk space
+* Two days of CPU time
+
+## How to use:
+* To replicate the results in my paper, simply run ./run.sh
+	+ Output will be contained in Results.csv
+* To replicate the results on special expressions, run ./runSpecial.sh
+* Otherwise, you can manually compile and run LearnDNF.cpp with your own options
 
 ## TODO:
 * Support truth tables as input
 * Add documentation for how the options work
-* Add documentation about run.sh 
