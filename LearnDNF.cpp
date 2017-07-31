@@ -8,7 +8,7 @@
    multiple n-bit strings delimited by a whitespace character. We can thus read a
    monotone DNF expression and easily find the corresponding truth table.
    
-   The hypothesis is represented by a dictionary as follows: For each term
+   The hypothesis is represented by a vector of structs as follows: For each term
    F-hat * chi_bitstring, we create an entry with key "bitstring" and value F-hat.
    This is also the current format of the output.
 */
@@ -37,6 +37,7 @@ int NUM_TERMS;
 int NUM_VARS;
 int VARS_PER_TERM;
 int SEED_NUM = 0;
+int TIME_LIMIT = 1500;
 const int INVALID = -1;
 const int UNIDIST = 0;
 const int POSCORR = 1;
@@ -48,7 +49,6 @@ const int RATIO = 1;
 const int CONSTANT = 0;
 const int PROBRATIO = 1;
 const int FLENGTH = 2;
-const int TIME_LIMIT = 7200;
 vector<int> SEEDS;
 
 struct funStruct {
@@ -65,8 +65,8 @@ struct indexStruct {
 	int index;
 	int value;
 };
-bool compareIndexStruct(indexStruct a, indexStruct b) { return (a.value < b.value); }
 
+bool compareIndexStruct(indexStruct a, indexStruct b) { return (a.value < b.value); }
 void findAllBitstrings(int length, vector<string>& bitstrings);
 double findFourierCoef(vector<funStruct>& targetFunction, string index, vector<string>& allBitstrings);
 int parityFunction(string index, string example);
@@ -159,6 +159,9 @@ int main(int argc, char** argv) {
 		}
 		else if (strstr(argv[i], "-z") != NULL) { // Number of variables per term
 			VARS_PER_TERM = strtol(argv[++i], NULL, 10);
+		}
+		else if (strstr(argv[i], "-o") != NULL) { // Number of variables per term
+			TIME_LIMIT = strtol(argv[++i], NULL, 10);
 		}
 	}
 	
@@ -279,10 +282,10 @@ int main(int argc, char** argv) {
 	currentHypothesis[0].value = 1;
 	double currentError = error(targetFunction, currentHypothesis);
 	if (initHyp == FLENGTH) {
-		currentHypothesis[0].value = 2 * NUM_TERMS - 1;
+		currentHypothesis[0].value = 2*NUM_TERMS - 1;
 	}
 	else if (initHyp == PROBRATIO) {
-		currentHypothesis[0].value = ((int) (currentError / (1-currentError)) / 2) * 2 + 1;
+		currentHypothesis[0].value = ((int) ((1-currentError)/currentError) / 2) * 2 + 1;
 	}
 
 	// Start looping to minimize the error
